@@ -8,6 +8,8 @@ function ezmlm_system($field){
 function ezmlm_settings() {
   $output .= form_textfield(t("email lists"), "ezmlm_lists", variable_get("ezmlm_lists", ""), 80, 255, t("Lists of ezmlm mailing list with this format <i>list name 1 , list1@domain.org | list name 2 , list2@domain.org</i>"));
 
+  $output .= form_textarea(t("\"Subscribe to\" message"), "ezmlm_subscribe_message", variable_get("ezmlm_subscribe_message", ""), 55, 4, "This text will be displayed at the top of the ezmlm form.");
+
   return $output;
 }
 
@@ -31,7 +33,7 @@ function ezmlm_block($op = "list", $delta = 0) {
 }  
 
 function ezmlm_page() {
-  global $ezmlm_subscribe;
+  $ezmlm_subscribe = $_POST["ezmlm_subscribe"];
 
   theme("header");
 
@@ -45,7 +47,8 @@ function ezmlm_page() {
 
 function _ezmlm_subscribe_process() {
 		
-  global $ezmlm_subscribe;
+  $ezmlm_subscribe = $_POST["ezmlm_subscribe"];
+
   /*
    ** Verify the syntax of the given e-mail address.  Empty e-mail addresses
    ** allowed.  See RFC 2822 for details.
@@ -72,14 +75,15 @@ function _ezmlm_subscribe_process() {
     $all_lists = explode("|",variable_get("ezmlm_lists",""));
     foreach($all_lists as $alist) {
       $alist = explode(",",$alist);
-      $list_email = $alist[1];
+      $list_email = trim($alist[1]);
       
       if (isset($ezmlm_subscribe[$list_email])) {
 	preg_match("/^($user)@(($domain)$)/i",$list_email, $match_list);
 	$list_name = $match_list[1];
 	$list_domain = $match_list[2];
-	
+
 	$address =  $list_name . "-subscribe-".$user_name."=".$user_domain."@".$list_domain;
+	
 	mail($address,"","");
 	print $list_email ."<br>";
       }
@@ -98,15 +102,14 @@ function _ezmlm_subscribe_form()  {
   //////////////////////////////////////////////
   // Formulaire
   //////////////////////////////////////////////
-  global $ezmlm_subscribe;
   print "<form name=\"ezmlm_subscribe\" method=\"post\" action=\"?q=ezmlm\">\n";
   
   
   if (sizeof($lists) > 1) {
-    print "<input type=\"text\" name=\"ezmlm_subscribe[email]\" value=\"". t("your email") ."\"><p>\n";
+    print "<input type=\"text\" name=\"ezmlm_subscribe[email]\" value=\"". t("Enter your email") ."\"><p>\n";
     print "<b>".t("Subscribe to").": </b><p >\n";
     foreach ($lists as $list_email => $list_text) {
-      print "<input type=\"checkbox\" name=\"ezmlm_subscribe[". $list_email ."]\">".$list_text.".<br>\n";
+      print "<input type=\"checkbox\" name=\"ezmlm_subscribe[". trim($list_email) ."]\">".trim($list_text).".<br>\n";
     } 
   }
   else {
@@ -121,4 +124,3 @@ function _ezmlm_subscribe_form()  {
 }
 
 ?>
-    

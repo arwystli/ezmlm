@@ -15,7 +15,7 @@ This module requires Drupal 4.2 or later.
 Installation
 ------------
 
-1. Copy the chatbox.module to the Drupal modules/ directory. Drupal should
+1. Copy the ezmlm.module to the Drupal modules/ directory. Drupal should
    automatically detect it.
 
 2. Go to the configuration menu and configure the ezmlm module  
