@@ -1,1 +1,4 @@
-coded by Stephane Couture (steph@alternatives.ca) 
+$Id$
+$Name$
+
+Drupal module created by Stephane Couture (steph@alternatives.ca) 

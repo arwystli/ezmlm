@@ -1,4 +1,10 @@
-1. July 2003 
-----------------
+$Id$
+$Name$
 
-I incorporated my script into drupal
+Drupal 4.4.0, 2004-04-20
+-------------------------
+- ported to 4.4 by Drumm.
+
+Drupal 4.2.0, 2003-07-01
+-------------------------
+- Initial release.  Original auther: Stéphane Couture
