@@ -106,7 +106,7 @@ function _ezmlm_subscribe_form()  {
   
   
   if (sizeof($lists) > 1) {
-    print "<input type=\"text\" name=\"ezmlm_subscribe[email]\" value=\"". t("your email") ."\"><p>\n";
+    print "<input type=\"text\" name=\"ezmlm_subscribe[email]\" value=\"". t("Enter your email") ."\"><p>\n";
     print "<b>".t("Subscribe to").": </b><p >\n";
     foreach ($lists as $list_email => $list_text) {
       print "<input type=\"checkbox\" name=\"ezmlm_subscribe[". trim($list_email) ."]\">".trim($list_text).".<br>\n";
