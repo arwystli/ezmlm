@@ -10,7 +10,7 @@ This module includes some utilities related to ezmlm.  For now, it only has a bo
 Requirements
 ------------
 
-This module requires Drupal 4.5 or later.
+This module requires Drupal 4.4, 4.5 or 4.6.
 
 Installation
 ------------
