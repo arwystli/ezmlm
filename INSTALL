@@ -1,0 +1,29 @@
+Readme
+------
+This module includes some utilities related to ezmlm.  For now, it only has a box and a form for subscribing for ezmlm lists.
+
+
+Feel free to add other functionnalities in there!
+
+Author: steph@alternatives.ca
+
+Requirements
+------------
+
+This module requires Drupal 4.2 or later.
+
+Installation
+------------
+
+1. Copy the chatbox.module to the Drupal modules/ directory. Drupal should
+   automatically detect it.
+
+2. Go to the configuration menu and configure the ezmlm module  
+
+   
+
+
+Author
+------
+
+Stéphane Couture (steph@alternatives.ca)
