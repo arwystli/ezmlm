@@ -138,6 +138,7 @@ function _ezmlm_subscribe_process() {
       $mylists[] = trim($list_email);
     }
   }
+
   return Array(t('You will receive a confirmation email in few minutes to register in the following %lists: ', array('%lists' => format_plural(count($mylists), 'list', 'lists'))) . implode(', ', $mylists), 'success');
 }
 
@@ -155,7 +156,7 @@ function _ezmlm_subscribe_form() {
     $output = t('There are no lists available for subscription.');
   } 
   elseif (count($lists) == 1) {
-      list($list_text, $list_email) = $lists[0];
+      list($list_text, $list_email) = each($lists); // list() only works on numeric arrays
       $output .= form_hidden('ezmlm_list]['. trim($list_email), 1);
   }
   else {
