@@ -35,14 +35,14 @@ function ezmlm_block($op = "list", $delta = 0) {
 function ezmlm_page() {
   $ezmlm_subscribe = $_POST["ezmlm_subscribe"];
 
-  theme("header");
+  print theme("header");
 
   if (isset($ezmlm_subscribe))
     _ezmlm_subscribe_process();
   else 
     _ezmlm_subscribe_form();
 
-  theme("footer");
+  print theme("footer");
 }
 
 function _ezmlm_subscribe_process() {
