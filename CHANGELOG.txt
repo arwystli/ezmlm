@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 4.6.0, 2005-03-07
+------------------------
+- ported to 4.6 module standards.  Chris Johnson.
+
 Drupal 4.5.0, 2005-02-12
 ------------------------
 - ported 4.5 and minor enhancements by Chris Johnson and Allie Micka.
