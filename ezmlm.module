@@ -73,25 +73,31 @@ function ezmlm_menu($may_cache) {
  * Generates a block with the subscription form.
  */
 function ezmlm_block($op = 'list', $delta = 0) {
-  if ($op == 'list') {
-    $blocks[0]['info'] = t('ezmlm subscribe to list(s)');
-    return $blocks;
-  }
-  else if (arg(0) != 'ezmlm') {
-    switch ($delta) {
-      case 0:
-        if (strlen(trim(variable_get('ezmlm_lists', '')))) {
-            $block['subject'] = t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists')));
-            $block['content'] = '';
-            if (isset($_POST['edit']['ezmlm_list'])) {
-                $msg = _ezmlm_subscribe_process();
-                $block['content'] .= $msg[0];
+  switch ($op) {
+    case 'list':
+      $blocks[0]['info'] = t('ezmlm subscribe to list(s)');
+      return $blocks;
+    case 'view':
+      if (arg(0) != 'ezmlm') {
+        switch ($delta) {
+          case 0:
+            if (strlen(trim(variable_get('ezmlm_lists', '')))) {
+                $block['subject'] = t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists')));
+                $block['content'] = '';
+                if (isset($_POST['edit']['ezmlm_list'])) {
+                    $msg = _ezmlm_subscribe_process();
+                    $block['content'] .= $msg[0];
+                }
+                $block['content'] .= _ezmlm_subscribe_form();
             }
-            $block['content'] .= _ezmlm_subscribe_form();
+            return $block;
         }
-        return $block;
+      }
+      break;
+    case 'configure':
+    case 'save':
+      return;
     }
-  }
 }  
 
 /**
@@ -105,7 +111,8 @@ function ezmlm_page() {
     drupal_set_message($msg[0], $msgtype);
   }
   $output = _ezmlm_subscribe_form();
-  print theme('page', $output, t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))));
+  drupal_set_title(t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))));
+  print theme('page', $output);
 }
 
 /**
