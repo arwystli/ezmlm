@@ -97,7 +97,7 @@ function ezmlm_block($op = 'list', $delta = 0) {
     case 'configure':
     case 'save':
       return;
-    }
+  }
 }  
 
 /**
