@@ -1,6 +1,12 @@
 $Id$
 $Name$
 
+Drupal 4.5.0, 2005-02-12
+------------------------
+- ported 4.5 and minor enhancements by Chris Johnson and Allie Micka.
+  * adds subscription block separate from subscription page.
+  * mailing lists admin interface much improved.
+
 Drupal 4.4.0, 2004-04-20
 -------------------------
 - ported to 4.4 by Drumm.
