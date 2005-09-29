@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal HEAD, 2005-09-29
+-----------------------
+- ported to HEAD module standards in preparation for 4.7.  Chris Johnson.
+
 Drupal 4.6.0, 2005-03-07
 ------------------------
 - ported to 4.6 module standards.  Chris Johnson.

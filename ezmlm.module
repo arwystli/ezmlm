@@ -112,7 +112,8 @@ function ezmlm_page() {
   }
   $output = _ezmlm_subscribe_form();
   drupal_set_title(t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))));
-  print theme('page', $output);
+  return $output;   // Drupal 4.7
+  // print theme('page', $output);      // Drupal 4.6
 }
 
 /**
@@ -192,7 +193,8 @@ function ezmlm_admin() {
   else if ($op == t('Delete checked lists')) {
     drupal_set_message(_ezmlm_admin_delete($edit));
   }
-  print theme('page', _ezmlm_admin_display());
+  return _ezmlm_admin_display();        // Drupal 4.7
+  // print theme('page', _ezmlm_admin_display());      // Drupal 4.6
 }
 
 /**
@@ -200,6 +202,7 @@ function ezmlm_admin() {
  */
 function _ezmlm_admin_display() {
   $output = '<div class="ezmlm">';
+  $header = array();
   $rows = array();
   $lists = _ezmlm_get_lists();
   if (count($lists) > 0) {
