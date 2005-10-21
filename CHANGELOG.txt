@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal HEAD, 2005-10-21
+-----------------------
+- converted to HEAD / 4.7 planned Forms API.  Chris Johnson.
+
 Drupal HEAD, 2005-09-29
 -----------------------
 - ported to HEAD module standards in preparation for 4.7.  Chris Johnson.
