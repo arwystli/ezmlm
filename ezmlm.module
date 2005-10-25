@@ -84,6 +84,13 @@ function ezmlm_block($op = 'list', $delta = 0) {
             if (strlen(trim(variable_get('ezmlm_lists', '')))) {
                 $block['subject'] = t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists')));
                 $block['content'] = '';
+            /* DEBUG */
+            /* #tree fixme
+            print "<pre>_POST:";
+            print_r($_POST);
+            print "</pre>";
+            */
+            /* END DEBUG */
                 if (isset($_POST['edit']['subscribe']['ezmlm_list'])) {
                     $msg = _ezmlm_subscribe_process();
                     $block['content'] .= $msg[0];
@@ -177,10 +184,9 @@ function _ezmlm_subscribe_form() {
     return t('There are no lists available for subscription.'); // formatting?
   }
   $form['#action'] = request_uri();
-  $form['subscribe']['#tree'] = FALSE; // #tree fixme
   $form['subscribe'] = array('#type' => 'fieldset',
-                            '#tree' => FALSE,
                             '#prefix' => '<div class="ezmlm">',
+                            '#tree' => TRUE,
                             '#suffix' => '</div>'); // #tree fixme
   $form['subscribe']['ezmlm_email'] = 
                      array ('#type' => 'textfield',
@@ -198,7 +204,6 @@ function _ezmlm_subscribe_form() {
       $form['subscribe']['ezmlm_list'][trim($list_email)] =
                             array('#type' => 'checkbox',
                                   '#title' => trim($list_text),
-                                  '#tree' => FALSE,
                                   '#default_value' => FALSE,
                                   '#return_value' => 1); // #tree fixme
     }
