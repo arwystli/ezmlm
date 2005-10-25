@@ -111,6 +111,13 @@ function ezmlm_page() {
     drupal_set_message($msg[0], $msgtype);
   }
   $output = _ezmlm_subscribe_form();
+  /* DEBUG */
+  /* #tree fixme
+  print "<pre>_POST: ";
+  print_r($_POST);
+  print "</pre>";
+  */
+  /* END DEBUG */
   drupal_set_title(t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))));
   return $output;
 }
@@ -120,6 +127,10 @@ function ezmlm_page() {
  * sends mail to the EZMLM subscribe addresses for the lists.
  */
 function _ezmlm_subscribe_process() {
+  /*
+   * TODO -- move any form value validation parts of this code to the more
+   * generic _validate() form API functions. Add more validations?
+   */
   $edit = $_POST['edit']['subscribe'];
   /*
    * Verify the syntax of the given e-mail address.  Empty e-mail addresses
@@ -156,16 +167,21 @@ function _ezmlm_subscribe_process() {
  *  HTML form.
  */
 function _ezmlm_subscribe_form() {
+  /**
+   * TODO -- check correct setting of ['#tree'] properties.  Simple tests
+   * seem to indicate that module functions the same, and the _POST array
+   * looks identical under both TRUE and FALSE settings.
+   */
   $lists = _ezmlm_get_lists();
   if (count($lists) == 0) {
     return t('There are no lists available for subscription.'); // formatting?
   }
-  $form['#action'] = request_uri(); // is this format even right?
-  $form['subscribe']['#tree'] = TRUE; // is this format even right?
+  $form['#action'] = request_uri();
+  $form['subscribe']['#tree'] = FALSE; // #tree fixme
   $form['subscribe'] = array('#type' => 'fieldset',
-                            '#tree' => TRUE,
+                            '#tree' => FALSE,
                             '#prefix' => '<div class="ezmlm">',
-                            '#suffix' => '</div>'); // fixme
+                            '#suffix' => '</div>'); // #tree fixme
   $form['subscribe']['ezmlm_email'] = 
                      array ('#type' => 'textfield',
                             '#title' => t('Your email address'),
@@ -182,9 +198,9 @@ function _ezmlm_subscribe_form() {
       $form['subscribe']['ezmlm_list'][trim($list_email)] =
                             array('#type' => 'checkbox',
                                   '#title' => trim($list_text),
-                                  '#tree' => TRUE,
+                                  '#tree' => FALSE,
                                   '#default_value' => FALSE,
-                                  '#return_value' => 1); // fixme
+                                  '#return_value' => 1); // #tree fixme
     }
   }
 
@@ -199,13 +215,13 @@ function ezmlm_admin() {
   return _ezmlm_admin_display();        // Drupal 4.7
 }
 
-function _ezmlm_admin_display_add_execute($form_id, $form) {
-  drupal_set_message(_ezmlm_admin_save($form));
+function _ezmlm_admin_display_add_execute($form_id, $form_values) {
+  drupal_set_message(_ezmlm_admin_save($form_values));
   drupal_goto('admin/ezmlm');
 }
 
-function _ezmlm_admin_display_delete_execute($form_id, $form) {
-  drupal_set_message(_ezmlm_admin_delete($form['status']));
+function _ezmlm_admin_display_delete_execute($form_id, $form_values) {
+  drupal_set_message(_ezmlm_admin_delete($form_values['status']));
   drupal_goto('admin/ezmlm');
 }
 
@@ -230,7 +246,7 @@ function _ezmlm_admin_display() {
                             '#default_value' => '',
                             '#options' => $options,
                             '#return_value' => 1,
-                            '#tree' => TRUE);
+                            '#tree' => TRUE); // #tree fixme
     
     $form['delete'] = array('#type' => 'submit',
                                        '#value' => t('Delete checked lists'));
