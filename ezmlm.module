@@ -145,6 +145,9 @@ function _ezmlm_subscribe_process() {
       $mylists[] = trim($list_email);
     }
   }
+  if (count($mylists) < 1) {
+    return Array('You must select a list to subscribe to.', 'error');
+  }
 
   return Array(t('You will receive a confirmation email in few minutes to register in the following %lists: ', array('%lists' => format_plural(count($mylists), 'list', 'lists'))) . implode(', ', $mylists), 'success');
 }
