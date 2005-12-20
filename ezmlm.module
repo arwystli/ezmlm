@@ -15,7 +15,7 @@
 function ezmlm_help($section) {
   switch ($section) {
     case 'admin/modules#description':
-      return t('Utilities related to ezmlm, like a box for subscribing to list.');
+      return t('Utilities related to ezmlm, such as a box for subscribing to list(s).');
   }
 }
 
