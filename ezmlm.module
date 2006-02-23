@@ -204,8 +204,8 @@ function ezmlm_admin() {
 function _ezmlm_admin_display() {
   $output = '<div class="ezmlm">';
   $rows = array();
-  $lists = _ezmlm_get_lists();
-  if (count($lists) > 0) {
+  if (_ezmlm_get_count() > 0) {
+    $lists = _ezmlm_get_lists();
     $listnum = 0;
     foreach ($lists as $name => $address) {
       $listnum++;
