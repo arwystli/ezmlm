@@ -237,8 +237,8 @@ function _ezmlm_admin_display() {
   $form['#action'] = url('admin/ezmlm');  // this may be the default and unnecessary
   $form['ezmlm_admin'] = array('#type' => 'markup',
                                '#value' => '<div class="ezmlm">');
-  $lists = _ezmlm_get_lists();
-  if (count($lists) > 0) {
+  if (_ezmlm_get_count() > 0) {
+    $lists = _ezmlm_get_lists();
     $listnum = 0;
     foreach ($lists as $name => $address) {
       $listnum++;
