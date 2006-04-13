@@ -84,13 +84,6 @@ function ezmlm_block($op = 'list', $delta = 0) {
             if (strlen(trim(variable_get('ezmlm_lists', '')))) {
                 $block['subject'] = t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists')));
                 $block['content'] = '';
-            /* DEBUG */
-            /* #tree fixme
-            print "<pre>_POST:";
-            print_r($_POST);
-            print "</pre>";
-            */
-            /* END DEBUG */
                 if (isset($_POST['edit']['subscribe']['ezmlm_list'])) {
                     $msg = _ezmlm_subscribe_process();
                     $block['content'] .= $msg[0];
@@ -118,13 +111,6 @@ function ezmlm_page() {
     drupal_set_message($msg[0], $msgtype);
   }
   $output = _ezmlm_subscribe_form();
-  /* DEBUG */
-  /* #tree fixme
-  print "<pre>_POST: ";
-  print_r($_POST);
-  print "</pre>";
-  */
-  /* END DEBUG */
   drupal_set_title(t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))));
   return $output;
 }
@@ -174,30 +160,25 @@ function _ezmlm_subscribe_process() {
  *  HTML form.
  */
 function _ezmlm_subscribe_form() {
-  /**
-   * TODO -- check correct setting of ['#tree'] properties.  Simple tests
-   * seem to indicate that module functions the same, and the _POST array
-   * looks identical under both TRUE and FALSE settings.
-   */
   $lists = _ezmlm_get_lists();
-  if (count($lists) == 0) {
+  if (_ezmlm_get_count() == 0) {
     return t('There are no lists available for subscription.'); // formatting?
   }
   $form['#action'] = request_uri();
   $form['subscribe'] = array('#type' => 'fieldset',
-                            '#prefix' => '<div class="ezmlm">',
                             '#tree' => TRUE,
-                            '#suffix' => '</div>'); // #tree fixme
+                            '#prefix' => '<div class="ezmlm">',
+                            '#suffix' => '</div>');
   $form['subscribe']['ezmlm_email'] = 
                      array ('#type' => 'textfield',
                             '#title' => t('Your email address'),
                             '#default_value' => '',
                             '#size' => 20,
                             '#maxlength' => 80 );
-  if (count($lists) == 1) {
+  if (_ezmlm_get_count() == 1) {
     list($list_text, $list_email) = each($lists); // list() only works on numeric arrays
     $form['subscribe']['ezmlm_list'][trim($list_email)] = 
-                          array('#type' => 'hidden', '#value' => 1); // fixme
+                          array('#type' => 'hidden', '#tree' => TRUE, '#value' => 1);
   }
   else { 
     foreach ($lists as $list_text => $list_email) {
@@ -205,7 +186,8 @@ function _ezmlm_subscribe_form() {
                             array('#type' => 'checkbox',
                                   '#title' => trim($list_text),
                                   '#default_value' => FALSE,
-                                  '#return_value' => 1); // #tree fixme
+                                  '#tree' => TRUE,
+                                  '#return_value' => 1);
     }
   }
 
@@ -217,15 +199,15 @@ function _ezmlm_subscribe_form() {
  * Menu callback; displays the mailing list overview/editing page.
  */
 function ezmlm_admin() {
-  return _ezmlm_admin_display();        // Drupal 4.7
+  return _ezmlm_admin_display();
 }
 
-function _ezmlm_admin_display_add_execute($form_id, $form_values) {
+function _ezmlm_admin_display_add_submit($form_id, $form_values) {
   drupal_set_message(_ezmlm_admin_save($form_values));
   drupal_goto('admin/ezmlm');
 }
 
-function _ezmlm_admin_display_delete_execute($form_id, $form_values) {
+function _ezmlm_admin_display_delete_submit($form_id, $form_values) {
   drupal_set_message(_ezmlm_admin_delete($form_values['status']));
   drupal_goto('admin/ezmlm');
 }
@@ -234,30 +216,25 @@ function _ezmlm_admin_display_delete_execute($form_id, $form_values) {
  * Prepare the mailing list admin form.
  */
 function _ezmlm_admin_display() {
-  $form['#action'] = url('admin/ezmlm');  // this may be the default and unnecessary
-  $form['ezmlm_admin'] = array('#type' => 'markup',
-                               '#value' => '<div class="ezmlm">');
   if (_ezmlm_get_count() > 0) {
+    // create a delete form
+    $form['#tree'] = TRUE;
     $lists = _ezmlm_get_lists();
-    $listnum = 0;
     foreach ($lists as $name => $address) {
-      $listnum++;
       $form['name'][$name] = array('#value' => $name);
       $form['address'][$name] = array('#value' => $address);
       $options[$name] = '';
     }
-
     $form['status'] = array('#type' => 'checkboxes',
-                            '#default_value' => '',
                             '#options' => $options,
-                            '#return_value' => 1,
-                            '#tree' => TRUE); // #tree fixme
+                            );
     
     $form['delete'] = array('#type' => 'submit',
                                        '#value' => t('Delete checked lists'));
-    $output = drupal_get_form('_ezmlm_admin_display_delete', $form);
+    $output .= drupal_get_form('_ezmlm_admin_display_delete', $form);
   }
-  $form = array();
+  $form = array();              // new add form
+  $form['ezmlm_admin'] = array('#type' => 'markup', '#value' => '<div class="ezmlm">');
   $form['ezmlm_add_name'] = array('#type' => 'textfield',
                             '#title' => t('New list name'),
                             '#size' => 20,
@@ -303,7 +280,7 @@ function _ezmlm_admin_save($edit) {
     $lists[$name] = $address;
   }
   variable_set('ezmlm_lists', serialize($lists));
-  return t('The mailing lists have been updated.');
+  return t('The mailing lists have been saved.');
 }
 
 /**
@@ -316,19 +293,22 @@ function _ezmlm_admin_delete($edit) {
   }
   $newlists = array();
   foreach ($lists as $name => $address) {
-    if (array_key_exists($name, $edit) && $edit[$name] == 1) {
+    if (isset($edit[$name]) && $edit[$name] === $name) {
       continue;     // skip copying this list to the new list
     }
     else {
       $newlists[$name] = $address;   // copy old list entry to new
     }
   }
-  variable_set('ezmlm_lists', serialize($newlists));
-  return t('The mailing lists have been updated.');
+  if (count($newlists) < count($lists)) {
+    variable_set('ezmlm_lists', serialize($newlists));
+    return t('The mailing lists have been deleted.');
+  }
 }
 
 /**
  * Return current number of lists.
+ * Use this instead of count(_ezmlm_get_lists()) because non-array counts as 1.
  */
 function _ezmlm_get_count() {
   $lists = _ezmlm_get_lists();
