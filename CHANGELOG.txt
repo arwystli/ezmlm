@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 5, 2007-12-15
+-----------------------
+- converted to Drupal 5.x  Bob Hutchinson
+
 Drupal HEAD, 2005-10-21
 -----------------------
 - converted to HEAD / 4.7 planned Forms API.  Chris Johnson.
