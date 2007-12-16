@@ -1,0 +1,4 @@
+; $Id$
+name = ezmlm
+description = "Manage ezmlm mailing lists"
+package = Mail
