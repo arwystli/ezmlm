@@ -76,7 +76,6 @@ function ezmlm_menu($may_cache) {
  *
  * Generates a block with the subscription form.
  */
-
 function ezmlm_block($op = 'list', $delta = 0) {
   switch ($op) {
     case 'list':
@@ -182,38 +181,35 @@ function ezmlm_settings() {
   return system_settings_form($form);
 }
 
+/**
+ * Validate form
+ */
 function ezmlm_settings_validate($form_id, $form_values) {
 
-  if ($form_values['ezmlm_add_address'] != "") {
+  if (strlen($form_values['ezmlm_add_address'])) {
     if ($error = user_validate_mail($form_values['ezmlm_add_address'])) {
       form_set_error('ezmlm_add_address', $error);
     }
-    if ($form_values['ezmlm_add_name'] == "") {
+    if (! strlen($form_values['ezmlm_add_name'])) {
       form_set_error('ezmlm_add_name', t('You must fill in the Name field'));
     }
   }
-  elseif ($form_values['ezmlm_add_name'] != "") {
-    form_set_error('ezmlm_add_address', t('You must fill in the Address field'));
-  }
 }
 
+/**
+ * Submit form
+ */
 function ezmlm_settings_submit($form_id, $form_values) {
-  $lists = _ezmlm_get_lists();
-  if (!is_array($lists)) {
-    $lists = array();
+  // various
+  if ($form_values['ezmlm_title'] != "") {
+    variable_set('ezmlm_title', $form_values['ezmlm_title']);
   }
-  $list_text = trim($form_values['ezmlm_add_name']);
-  $list_email = trim($form_values['ezmlm_add_address']);
-  if (strlen($list_text) && strlen($list_email)) {
-    $lists[$list_text] = $list_email;
-    variable_set('ezmlmmailinglists', $lists);
-    drupal_set_message( t('The mailing lists have been saved.'));
+  if ($form_values['ezmlm_block_title'] != "") {
+    variable_set('ezmlm_block_title', $form_values['ezmlm_block_title']);
   }
   // look for deletes
   $lists = _ezmlm_get_lists();
-  if (!is_array($lists)) {
-    return;
-  }
+  if (is_array($lists)) {
   // deletions
   $newlists = array();
   $delct = 0;
@@ -230,12 +226,20 @@ function ezmlm_settings_submit($form_id, $form_values) {
     variable_set('ezmlmmailinglists', $newlists);
     drupal_set_message(t('Deletions done.'));
   }
-  // various
-  if ($form_values['ezmlm_title'] != "") {
-    variable_set('ezmlm_title', $form_values['ezmlm_title']);
   }
-  if ($form_values['ezmlm_block_title'] != "") {
-    variable_set('ezmlm_block_title', $form_values['ezmlm_block_title']);
+  // add list
+  $lists = _ezmlm_get_lists();
+  $count = _ezmlm_get_count();
+  if (!is_array($lists) || $count < 1 ) {
+    $lists = array();
+    variable_del('ezmlmmailinglists');
+  }
+  $list_text = trim($form_values['ezmlm_add_name']);
+  $list_email = trim($form_values['ezmlm_add_address']);
+  if (strlen($list_text) && strlen($list_email)) {
+    $lists[$list_text] = $list_email;
+    variable_set('ezmlmmailinglists', $lists);
+    drupal_set_message( t('The mailing lists have been saved.'));
   }
 }
 
