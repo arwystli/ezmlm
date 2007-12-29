@@ -132,9 +132,6 @@ function ezmlm_subscribe_form() {
     $form['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Subscribe'));
-
-    $form['#validate'] = array('ezmlm_subscribe_form_validate');
-    $form['#submit'] = array('ezmlm_subscribe_form_submit');
   }
   else {
      $form['subscribe'] = array(
