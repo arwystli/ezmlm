@@ -10,7 +10,7 @@ This module includes some utilities related to ezmlm.  For now, it only has a bo
 Requirements
 ------------
 
-This module requires Drupal 4.4, 4.5 or 4.6.
+This module requires Drupal 6.x
 
 Installation
 ------------
@@ -35,3 +35,4 @@ Authors
 Stéphane Couture (steph@alternatives.ca)
 Chris Johnson (chris at tinpixel dot com)
 Allie Micka (allie at pajunas dot com)
+Bob Hutchinson (hutch at midwales dot net)

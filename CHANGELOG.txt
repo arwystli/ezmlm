@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 6, 2007-12-29
+-----------------------
+- converted to Drupal 6.x  Bob Hutchinson
+
 Drupal 5, 2007-12-15
 -----------------------
 - converted to Drupal 5.x  Bob Hutchinson
