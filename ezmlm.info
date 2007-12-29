@@ -2,3 +2,4 @@
 name = ezmlm
 description = "Manage ezmlm mailing lists"
 package = Mail
+core = 6.x
