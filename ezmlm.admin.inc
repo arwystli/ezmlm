@@ -74,6 +74,8 @@ function ezmlm_admin_settings() {
     '#maxlength' => 20,
     '#required' => FALSE,
   );
+  $form['#validate'][] = 'ezmlm_admin_settings_validate';
+  $form['#submit'][] = 'ezmlm_admin_settings_submit';
 
   return system_settings_form($form);
 }
