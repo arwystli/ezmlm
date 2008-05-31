@@ -146,7 +146,7 @@ function ezmlm_settings() {
     );
 
     $lists = variable_get('ezmlmmailinglists', '');
-    if(is_array($lists) ) {
+    if (is_array($lists)) {
       foreach ($lists as $list_text => $list_email) {
         $form['ezmlm_delete'][$list_text] = array(
           '#type' => 'checkbox',
@@ -273,7 +273,7 @@ function _ezmlm_subscribe_form() {
     );
     $ct++;
   }
-  $form['ezmlm_email'] = array (
+  $form['ezmlm_email'] = array(
     '#type' => 'textfield',
     '#title' => t('Your email address'),
     '#default_value' => ($user->mail ? $user->mail : ''),
@@ -291,17 +291,17 @@ function _ezmlm_subscribe_form_validate($form_id, $form_values) {
   $arr = array();
   $lists = _ezmlm_get_lists();
   $ct = 1;
-  foreach ($form_values as $key=>$address) {
+  foreach ($form_values as $key => $address) {
     $address = trim($address);
-    if( $key == "ezmlm_list_$ct" && $address && in_array($address, $lists)) {
+    if ($key == "ezmlm_list_$ct" && $address && in_array($address, $lists)) {
        $arr[] = $address;
     }
     $ct++;
   }
-  if ( count($arr) < 1 ) {
+  if (count($arr) < 1) {
       form_set_error('', t('No lists selected!'));
   }
-  if ( $error = user_validate_mail($form_values['ezmlm_email'])) {
+  if ($error = user_validate_mail($form_values['ezmlm_email'])) {
     form_set_error('ezmlm_email', $error);
   }
 }
@@ -311,18 +311,18 @@ function _ezmlm_subscribe_form_submit($form_id, $form_values) {
   $arr = array();
   $ct = 1;
   // get the selected mailing list addresses
-  foreach ($form_values as $key=>$address) {
+  foreach ($form_values as $key => $address) {
     $address = trim($address);
-    if( $key == "ezmlm_list_$ct" && $address && in_array($address, $lists)) {
+    if ($key == "ezmlm_list_$ct" && $address && in_array($address, $lists)) {
       $arr[] = $address;
    }
     $ct++;
   }
   $email = trim($form_values['ezmlm_email']);
   $ret = _ezmlm_subscribe_process($arr, $email);
-  if ( is_array($ret)) {
+  if (is_array($ret)) {
     $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
-    drupal_set_message($output . "<br>" . implode('<br>', $ret));
+    drupal_set_message($output ."<br>". implode('<br>', $ret));
   }
   else {
     drupal_set_message($ret, 'error');
@@ -351,7 +351,7 @@ function _ezmlm_subscribe_process($subs, $mail) {
       }
     }
   }
-  return($mylists);
+  return ($mylists);
 }
 
 /**
