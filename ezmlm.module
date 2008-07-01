@@ -43,21 +43,21 @@ function ezmlm_perm() {
  */
 function ezmlm_menu() {
   $items['ezmlm/add'] = array(
-    'title' => ('mailing lists'),
+    'title' => 'Mailing lists',
     'page callback' => 'ezmlm_block',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
   $items['ezmlm'] = array(
-    'title' => ('Mailing lists'),
+    'title' => 'Mailing lists',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ezmlm_subscribe_form'),
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/settings/ezmlm'] = array(
-    'title' => t('Ezmlm lists'),
-    'description' => t('Ezmlm mailing lists management.'),
+    'title' => 'Ezmlm lists',
+    'description' => 'Ezmlm mailing lists management.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('ezmlm_admin_settings'),
     'access arguments' => array('administer ezmlm'),
