@@ -1,0 +1,151 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  ezmlm.module,v 1.18.4.3 2008/05/31 19:33:59 hutch
+#  ezmlm.info,v 1.1.2.1 2007/12/10 21:32:36 hutch
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2008-09-03 10:13+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ezmlm.module:19
+msgid "Utilities related to ezmlm, such as a box for subscribing to list(s)."
+msgstr ""
+
+#: ezmlm.module:29
+msgid "mailing %list"
+msgstr ""
+
+#: ezmlm.module:29
+msgid "Subscribe to mailing %list"
+msgstr ""
+
+#: ezmlm.module:63
+msgid "Ezmlm lists"
+msgstr ""
+
+#: ezmlm.module:64
+msgid "Ezmlm mailing lists management."
+msgstr ""
+
+#: ezmlm.module:82
+msgid "ezmlm subscribe to list(s)"
+msgstr ""
+
+#: ezmlm.module:90;176
+msgid "Subscriptions"
+msgstr ""
+
+#: ezmlm.module:120
+msgid "Add mailing lists"
+msgstr ""
+
+#: ezmlm.module:121
+msgid "Add new lists"
+msgstr ""
+
+#: ezmlm.module:126
+msgid "New list name"
+msgstr ""
+
+#: ezmlm.module:133
+msgid "New list address"
+msgstr ""
+
+#: ezmlm.module:143
+msgid "Remove mailing lists"
+msgstr ""
+
+#: ezmlm.module:144
+msgid "Check the lists you want to remove"
+msgstr ""
+
+#: ezmlm.module:160
+msgid "Various settings"
+msgstr ""
+
+#: ezmlm.module:165
+msgid "List title"
+msgstr ""
+
+#: ezmlm.module:166
+msgid "Configure the title of the subscription list"
+msgstr ""
+
+#: ezmlm.module:167;264
+msgid "Mailing lists"
+msgstr ""
+
+#: ezmlm.module:174
+msgid "Block title"
+msgstr ""
+
+#: ezmlm.module:175
+msgid "Configure the title of the block subscription list"
+msgstr ""
+
+#: ezmlm.module:194
+msgid "You must fill in the Name field"
+msgstr ""
+
+#: ezmlm.module:227
+msgid "Deletions done."
+msgstr ""
+
+#: ezmlm.module:242
+msgid "The mailing lists have been saved."
+msgstr ""
+
+#: ezmlm.module:258
+msgid "There are no lists available for subscription."
+msgstr ""
+
+#: ezmlm.module:278
+msgid "Your email address"
+msgstr ""
+
+#: ezmlm.module:285
+msgid "Subscribe"
+msgstr ""
+
+#: ezmlm.module:302
+msgid "No lists selected!"
+msgstr ""
+
+#: ezmlm.module:324
+msgid "Please check your mail at %mail to confirm registration of:"
+msgstr ""
+
+#: ezmlm.module:29;29
+msgid "list"
+msgid_plural "lists"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ezmlm.module:38
+msgid "administer ezmlm"
+msgstr ""
+
+#: ezmlm.module:0 ezmlm.info:0
+msgid "ezmlm"
+msgstr ""
+
+#: ezmlm.info:0
+msgid "Manage ezmlm mailing lists"
+msgstr ""
+
+#: ezmlm.info:0
+msgid "Mail"
+msgstr ""
+
