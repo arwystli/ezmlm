@@ -1,6 +1,12 @@
 $Id$
 $Name$
 
+Drupal 6, 2008-12-16
+-----------------------
+- added selection of mailing lists on registration.  Bob Hutchinson
+  * choice of name or mailing list address as label
+  * compliance to coding standards
+
 Drupal 6, 2008-07-01
 -----------------------
 some menu fixes  Bob Hutchinson
