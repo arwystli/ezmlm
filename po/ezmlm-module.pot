@@ -3,14 +3,14 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  ezmlm.module,v 1.18.4.3 2008/05/31 19:33:59 hutch
+#  ezmlm.module,v 1.18.4.4 2008/09/03 10:38:19 hutch
 #  ezmlm.info,v 1.1.2.1 2007/12/10 21:32:36 hutch
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-09-03 10:13+0100\n"
+"POT-Creation-Date: 2008-12-15 10:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -19,121 +19,157 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ezmlm.module:19
-msgid "Utilities related to ezmlm, such as a box for subscribing to list(s)."
-msgstr ""
-
-#: ezmlm.module:29
-msgid "mailing %list"
-msgstr ""
-
-#: ezmlm.module:29
-msgid "Subscribe to mailing %list"
-msgstr ""
-
-#: ezmlm.module:63
-msgid "Ezmlm lists"
-msgstr ""
-
-#: ezmlm.module:64
-msgid "Ezmlm mailing lists management."
-msgstr ""
-
-#: ezmlm.module:82
-msgid "ezmlm subscribe to list(s)"
-msgstr ""
-
-#: ezmlm.module:90;176
-msgid "Subscriptions"
-msgstr ""
-
-#: ezmlm.module:120
-msgid "Add mailing lists"
-msgstr ""
-
-#: ezmlm.module:121
-msgid "Add new lists"
-msgstr ""
-
-#: ezmlm.module:126
-msgid "New list name"
-msgstr ""
-
-#: ezmlm.module:133
-msgid "New list address"
-msgstr ""
-
-#: ezmlm.module:143
-msgid "Remove mailing lists"
-msgstr ""
-
-#: ezmlm.module:144
-msgid "Check the lists you want to remove"
-msgstr ""
-
-#: ezmlm.module:160
-msgid "Various settings"
-msgstr ""
-
-#: ezmlm.module:165
-msgid "List title"
-msgstr ""
-
-#: ezmlm.module:166
-msgid "Configure the title of the subscription list"
-msgstr ""
-
-#: ezmlm.module:167;264
+#: ezmlm.module:28;107;114;260;408
 msgid "Mailing lists"
 msgstr ""
 
-#: ezmlm.module:174
-msgid "Block title"
+#: ezmlm.module:29
+msgid "Please select the mailing lists you would like to subscribe to."
 msgstr ""
 
-#: ezmlm.module:175
-msgid "Configure the title of the block subscription list"
-msgstr ""
-
-#: ezmlm.module:194
-msgid "You must fill in the Name field"
-msgstr ""
-
-#: ezmlm.module:227
-msgid "Deletions done."
-msgstr ""
-
-#: ezmlm.module:242
-msgid "The mailing lists have been saved."
-msgstr ""
-
-#: ezmlm.module:258
-msgid "There are no lists available for subscription."
-msgstr ""
-
-#: ezmlm.module:278
-msgid "Your email address"
-msgstr ""
-
-#: ezmlm.module:285
-msgid "Subscribe"
-msgstr ""
-
-#: ezmlm.module:302
-msgid "No lists selected!"
-msgstr ""
-
-#: ezmlm.module:324
+#: ezmlm.module:60;469
 msgid "Please check your mail at %mail to confirm registration of:"
 msgstr ""
 
-#: ezmlm.module:29;29
+#: ezmlm.module:77
+msgid "Utilities related to ezmlm, such as a box for subscribing to list(s)."
+msgstr ""
+
+#: ezmlm.module:87
+msgid "mailing %list"
+msgstr ""
+
+#: ezmlm.module:87
+msgid "Subscribe to mailing %list"
+msgstr ""
+
+#: ezmlm.module:121
+msgid "Ezmlm lists"
+msgstr ""
+
+#: ezmlm.module:122
+msgid "Ezmlm mailing lists management."
+msgstr ""
+
+#: ezmlm.module:140
+msgid "ezmlm subscribe to list(s)"
+msgstr ""
+
+#: ezmlm.module:148;276
+msgid "Subscriptions"
+msgstr ""
+
+#: ezmlm.module:181
+msgid "Add mailing lists"
+msgstr ""
+
+#: ezmlm.module:182
+msgid "Add new lists"
+msgstr ""
+
+#: ezmlm.module:187
+msgid "New list name"
+msgstr ""
+
+#: ezmlm.module:194
+msgid "New list address"
+msgstr ""
+
+#: ezmlm.module:204
+msgid "Remove mailing lists"
+msgstr ""
+
+#: ezmlm.module:205
+msgid "Check the lists you want to remove"
+msgstr ""
+
+#: ezmlm.module:222
+msgid "Registration settings"
+msgstr ""
+
+#: ezmlm.module:223
+msgid "Allow new users to select mailing lists on registration"
+msgstr ""
+
+#: ezmlm.module:228
+msgid "Display lists in registration form"
+msgstr ""
+
+#: ezmlm.module:244;267
+msgid "List display type"
+msgstr ""
+
+#: ezmlm.module:247
+msgid "Display %listaddress or %listname on the registration page"
+msgstr ""
+
+#: ezmlm.module:253
+msgid "Various settings"
+msgstr ""
+
+#: ezmlm.module:258
+msgid "List title"
+msgstr ""
+
+#: ezmlm.module:259
+msgid "Configure the title of the subscription page"
+msgstr ""
+
+#: ezmlm.module:270
+msgid "Display %listaddress or %listname on the subscription page"
+msgstr ""
+
+#: ezmlm.module:274
+msgid "Block title"
+msgstr ""
+
+#: ezmlm.module:275
+msgid "Configure the title of the block subscription page"
+msgstr ""
+
+#: ezmlm.module:283
+msgid "Block display type"
+msgstr ""
+
+#: ezmlm.module:286
+msgid "Display %listaddress or %listname on the block subscription page"
+msgstr ""
+
+#: ezmlm.module:302
+msgid "You must fill in the Name field"
+msgstr ""
+
+#: ezmlm.module:337
+msgid "Deletions done."
+msgstr ""
+
+#: ezmlm.module:352
+msgid "The mailing lists have been saved."
+msgstr ""
+
+#: ezmlm.module:402
+msgid "There are no lists available for subscription."
+msgstr ""
+
+#: ezmlm.module:422
+msgid "Your email address"
+msgstr ""
+
+#: ezmlm.module:429
+msgid "Subscribe"
+msgstr ""
+
+#: ezmlm.module:447
+msgid "No lists selected!"
+msgstr ""
+
+#: ezmlm.module:87;87
 msgid "list"
 msgid_plural "lists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ezmlm.module:38
+#: ezmlm.module:96
 msgid "administer ezmlm"
 msgstr ""
 
