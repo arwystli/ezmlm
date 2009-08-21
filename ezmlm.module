@@ -141,8 +141,10 @@ function ezmlm_block($op = 'list', $delta = 0) {
           case 0:
             $block = "";
             if (drupal_strlen(trim(variable_get('ezmlmmailinglists', '')))) {
+              $display = variable_get('ezmlm_block_display', 'email');
+              $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
               $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
-              $block['content'] .= ezmlm_page(variable_get('ezmlm_block_display', 'email'));
+              $block['content'] .= theme('ezmlm_subscribe_page', $form, 'block');
             }
             return $block;
         }
@@ -256,8 +258,8 @@ function ezmlm_page($display = FALSE) {
   if (! $display) {
     $display = variable_get('ezmlm_display', 'email');
   }
-  $output = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
-  return $output;
+  $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
+  return theme('ezmlm_subscribe_page', $form, 'page');
 }
 
 /**
@@ -277,12 +279,26 @@ function _ezmlm_subscribe_process($subs, $mail) {
         list($list_name, $list_domain) =  split('@', $list_email);
         // subscribe address for list formatted below
         $to = trim($list_name) .'-subscribe-'. trim($user_name) .'='. trim($user_domain) .'@'. trim($list_domain);
-        mail($to, '', '');
+        $lang = language_default();
+        drupal_mail('ezmlm', 'subscribe', $to, $lang);
+        // mail($to, '', '');
         $mylists[] = trim($list_email);
       }
     }
   }
   return $mylists;
+}
+
+/**
+ * Implementation of hook_mail().
+ */
+function ezmlm_mail($key, &$message, $params) {
+  switch($key) {
+    case 'subscribe':
+      $message['subject'] = '';
+      $message['body'] = '';
+    break;
+  }
 }
 
 /**
@@ -314,3 +330,28 @@ function _ezmlm_get_lists($type='DEFAULT') {
   }
 }
 
+/**
+ * Implementation of hook_theme().
+ */
+function ezmlm_theme() {
+  return array(
+    'ezmlm_subscribe_page' => array(
+      'arguments' => array(
+        $form = "",
+        $type = "",
+      ),
+    ),
+  );
+}
+
+function theme_ezmlm_subscribe_page($form, $type = 'page') {
+  switch ($type) {
+    case 'block':
+      $output = $form;
+    break;
+    case 'page':
+      $output = $form;
+    break;
+  }
+  return $output;
+}

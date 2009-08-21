@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 6, 2009-08-21
+-----------------------
+- now uses drupal_mail(). added theming
+
 Drupal 6, 2008-12-16
 -----------------------
 - added selection of mailing lists on registration.  Bob Hutchinson
@@ -43,4 +47,4 @@ Drupal 4.4.0, 2004-04-20
 
 Drupal 4.2.0, 2003-07-01
 -------------------------
-- Initial release.  Original auther: Stéphane Couture
+- Initial release.  Original auther: Stï¿½phane Couture
