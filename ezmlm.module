@@ -14,7 +14,7 @@ function ezmlm_permission() {
   return array(
     'administer ezmlm' => array(
       'title' => t('Administer Ezmlm'),
-      'description' => t('Perform maintenance tasks for Ezmlm'),
+      'description' => t('Add/Remove mailing lists and configure the display for Ezmlm'),
     ),
   );
 }
@@ -31,6 +31,7 @@ function ezmlm_help($path, $arg) {
 
 /**
  * Implementation of hook_link().
+ * currently deprecated in D7. Never used anyway AFAIK
  */
 /*
 function ezmlm_link($type, $node = NULL, $teaser = FALSE) {
@@ -71,23 +72,43 @@ function ezmlm_menu() {
 }
 
 
-function ezmlm_block_list() {
+/**
+ * Implement hook_block_info().
+ *
+ */
+function ezmlm_block_info() {
   $blocks['ezmlm_subscribe'] = array(
     'info' => t('ezmlm subscribe to list(s)'),
   );
   return $blocks;
 }
+
+/**
+ * Implement hook_block_view().
+ *
+ */
 function ezmlm_block_view($delta = ''){
+  $block = "";
   switch ($delta) {
-    case 0:
-      $block = "";
-      if (drupal_strlen(trim(variable_get('ezmlmmailinglists', '')))) {
+    case 'ezmlm_subscribe':
+      $list = variable_get('ezmlmmailinglists', '');
+      if ( is_array($list) && count($list)) {
         $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
-        $block['content'] .= ezmlm_page(variable_get('ezmlm_block_display', 'email'));
+        $block['content'] = ezmlm_block_contents(1);
       }
+      break;
+    case 'empty':
       break;
   }
   return $block;
+}
+function ezmlm_block_contents($which_block) {
+  switch ($which_block) {
+    case 1:
+      return ezmlm_page(variable_get('ezmlm_block_display', 'email'));
+    case 2:
+      return;
+  }
 }
 
 /**
