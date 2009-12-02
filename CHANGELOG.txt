@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 7, 2009-12-2
+-----------------------
+- converted to Drupal 7.x
+
 Drupal 6, 2009-08-21
 -----------------------
 - now uses drupal_mail(). added theming

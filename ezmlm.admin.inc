@@ -1,7 +1,7 @@
 <?php
 // $Id$
 // $Name$
-// for drupal 6.x
+// for drupal 7.x
 
 /**
  * @file
@@ -149,10 +149,10 @@ function ezmlm_admin_settings_validate($form, &$form_state) {
  */
 function ezmlm_admin_settings_submit($form, &$form_state) {
   // various
-  if ($form_state['values']['ezmlm_title'] != "") {
+  if (isset($form_state['values']['ezmlm_title']) && $form_state['values']['ezmlm_title'] != "") {
     variable_set('ezmlm_title', $form_state['values']['ezmlm_title']);
   }
-  if ($form_state['values']['ezmlm_block_title'] != "") {
+  if (isset($form_state['values']['ezmlm_block_title']) && $form_state['values']['ezmlm_block_title'] != "") {
     variable_set('ezmlm_block_title', $form_state['values']['ezmlm_block_title']);
   }
   // look for deletes
@@ -192,7 +192,7 @@ function ezmlm_admin_settings_submit($form, &$form_state) {
     drupal_set_message( t('The mailing lists have been saved.'));
   }
   // registration
-  if ($form_state['values']['ezmlm_register']) {
+  if ( isset($form_state['values']['ezmlm_register'])) {
     variable_set('ezmlm_register', 1);
   }
   else {
@@ -217,13 +217,13 @@ function ezmlm_admin_settings_submit($form, &$form_state) {
     }
   }
   // display
-  if ( $form_state['values']['ezmlm_display'] ) {
+  if ( isset($form_state['values']['ezmlm_display'])) {
     variable_set('ezmlm_display', $form_state['values']['ezmlm_display']);
   }
-  if ( $form_state['values']['ezmlm_block_display'] ) {
+  if (isset($form_state['values']['ezmlm_block_display'])) {
     variable_set('ezmlm_block_display', $form_state['values']['ezmlm_block_display']);
   }
-  if ( $form_state['values']['ezmlm_reg_display'] ) {
+  if ( isset($form_state['values']['ezmlm_reg_display'])) {
     variable_set('ezmlm_reg_display', $form_state['values']['ezmlm_reg_display']);
   }
 }

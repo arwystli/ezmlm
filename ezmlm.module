@@ -1,7 +1,7 @@
 <?php
 // $Id$
 // $Name$
-// for drupal 6.x
+// for drupal 7.x
 
 /**
  * @file
@@ -10,66 +10,17 @@
  * Module sends subscription requests to each list's subscribe address.
  */
 
-/**
- * Implementation of hook_user().
- * by mjs2020
- * this adds the ability to subscribe to mailing lists
- * during the registration process.
- */
-function ezmlm_user($op, &$edit, &$account, $category = NULL) {
-  switch ($op) {
-    case 'register':
-      if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
-        $listsform = ezmlm_subscribe_form('', 'REG', variable_get('ezmlm_reg_display', 'email'));
-        unset($listsform['ezmlm_email'], $listsform['submit'], $listsform['subscribe'] );
-
-        $form['ezmlm'] = array(
-          "#type" => "fieldset",
-          "#title" => t("Mailing lists"),
-          "#description" => t("Please select the mailing lists you would like to subscribe to."),
-          '#collapsible' => FALSE,
-          "#tree" => FALSE,
-          "#parents" => array("ezmlm"),
-        );
-        $form['ezmlm']['ezmlm_subscribe'] = array();
-        foreach ($listsform['ezmlm_subscribe'] as $key => $ezmlm_list) {
-          $ezmlm_list['#parents'][0] = $key;
-          $ezmlm_list['#name'] = $key;
-          $form['ezmlm']['ezmlm_subscribe'][$key] = $ezmlm_list;
-        }
-        return $form;
-      }
-      break;
-    case 'insert':
-      if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
-        $lists = _ezmlm_get_lists('REG');
-        $listct = _ezmlm_get_count('REG');
-        $arr = array();
-        // get the selected mailing list addresses
-        for ($ct=1; $ct <= $listct; $ct++) {
-          if (isset($edit["ezmlm_list_$ct"])) {
-            $address = $edit["ezmlm_list_$ct"];
-            if ($address && in_array($address, $lists)) {
-              $arr[] = $address;
-            }
-          }
-        }
-        $email = trim($edit['mail']);
-        $ret = _ezmlm_subscribe_process($arr, $email);
-        if (is_array($ret)) {
-          $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
-          drupal_set_message($output ."<br />". implode('<br />', $ret));
-        }
-        else {
-          drupal_set_message($ret, 'error');
-        }
-      }
-      break;
-  }
+function ezmlm_permission() {
+  return array(
+    'administer ezmlm' => array(
+      'title' => t('Administer Ezmlm'),
+      'description' => t('Perform maintenance tasks for Ezmlm'),
+    ),
+  );
 }
 
 /**
- * Implementation of hook_help().
+ * Implement hook_help().
  */
 function ezmlm_help($path, $arg) {
   switch ($path) {
@@ -81,6 +32,7 @@ function ezmlm_help($path, $arg) {
 /**
  * Implementation of hook_link().
  */
+/*
 function ezmlm_link($type, $node = NULL, $teaser = FALSE) {
   $links = array();
   if ($type == 'page' && user_access('access content')) {
@@ -88,16 +40,10 @@ function ezmlm_link($type, $node = NULL, $teaser = FALSE) {
   }
   return $links;
 }
+*/
 
 /**
- * Implementation of hook_perm().
- */
-function ezmlm_perm() {
-  return array('administer ezmlm');
-}
-
-/**
- * Implementation of hook_menu().
+ * Implement hook_menu().
  */
 function ezmlm_menu() {
   $items['ezmlm/add'] = array(
@@ -112,7 +58,7 @@ function ezmlm_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['admin/settings/ezmlm'] = array(
+  $items['admin/config/services/ezmlm'] = array(
     'title' => 'Ezmlm lists',
     'description' => 'Ezmlm mailing lists management.',
     'page callback' => 'drupal_get_form',
@@ -124,36 +70,84 @@ function ezmlm_menu() {
   return $items;
 }
 
-/**
- * Implementation of hook_block().
- *
- * Generates a block with the subscription form.
- */
 
-function ezmlm_block($op = 'list', $delta = 0) {
-  switch ($op) {
-    case 'list':
-      $blocks[0]['info'] = t('ezmlm subscribe to list(s)');
-      return $blocks;
-    case 'view':
-      if (arg(0) != 'ezmlm') {
-        switch ($delta) {
-          case 0:
-            $block = "";
-            if (drupal_strlen(trim(variable_get('ezmlmmailinglists', '')))) {
-              $display = variable_get('ezmlm_block_display', 'email');
-              $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
-              $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
-              $block['content'] .= theme('ezmlm_subscribe_page', $form, 'block');
-            }
-            return $block;
-        }
+function ezmlm_block_list() {
+  $blocks['ezmlm_subscribe'] = array(
+    'info' => t('ezmlm subscribe to list(s)'),
+  );
+  return $blocks;
+}
+function ezmlm_block_view($delta = ''){
+  switch ($delta) {
+    case 0:
+      $block = "";
+      if (drupal_strlen(trim(variable_get('ezmlmmailinglists', '')))) {
+        $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
+        $block['content'] .= ezmlm_page(variable_get('ezmlm_block_display', 'email'));
       }
       break;
-    case 'configure':
-    case 'save':
-      return;
   }
+  return $block;
+}
+
+/**
+ * Implement hook_user_insert().
+ *
+ */
+function ezmlm_user_insert(&$edit, $account, $category) {
+
+  if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
+    $lists = _ezmlm_get_lists('REG');
+    $listct = _ezmlm_get_count('REG');
+    $arr = array();
+    // get the selected mailing list addresses
+    for ($ct=1; $ct <= $listct; $ct++) {
+      if (isset($edit["ezmlm_list_$ct"])) {
+        $address = $edit["ezmlm_list_$ct"];
+        if ($address && in_array($address, $lists)) {
+          $arr[] = $address;
+        }
+      }
+    }
+    $email = trim($edit['mail']);
+    $ret = _ezmlm_subscribe_process($arr, $email);
+    if (is_array($ret)) {
+      $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
+      drupal_set_message($output ."<br />". implode('<br />', $ret));
+    }
+    else {
+      drupal_set_message($ret, 'error');
+   }
+ }
+}
+
+/**
+ * Implement hook_form_FORM_ID_alter().
+ *
+ */
+function ezmlm_form_user_register_form_alter(&$form, &$form_state) {
+  // identify the registration form and add some
+  if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
+    $listsform = ezmlm_subscribe_form('', 'REG', variable_get('ezmlm_reg_display', 'email'));
+    unset($listsform['ezmlm_email'], $listsform['submit'], $listsform['subscribe'] );
+
+    $form['ezmlm'] = array(
+      "#type" => "fieldset",
+      "#title" => t("Mailing lists"),
+      "#description" => t("Please select the mailing lists you would like to subscribe to."),
+      '#collapsible' => FALSE,
+      "#tree" => FALSE,
+      "#parents" => array("ezmlm"),
+    );
+    $form['ezmlm']['ezmlm_subscribe'] = array();
+    foreach ($listsform['ezmlm_subscribe'] as $key => $ezmlm_list) {
+      $ezmlm_list['#parents'][0] = $key;
+      $ezmlm_list['#name'] = $key;
+      $form['ezmlm']['ezmlm_subscribe'][$key] = $ezmlm_list;
+    }
+    return $form;
+  }
+
 }
 
 /**
@@ -164,7 +158,6 @@ function ezmlm_block($op = 'list', $delta = 0) {
  */
 function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email') {
   global $user;
-
   if (_ezmlm_get_count($type)) {
     $lists = _ezmlm_get_lists($type);
     $form['subscribe'] = array(
@@ -184,7 +177,7 @@ function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email'
     $form['ezmlm_email'] = array(
       '#type' => 'textfield',
       '#title' => t('Your email address'),
-      '#default_value' => ($user->mail ? $user->mail : ''),
+      '#default_value' => (isset($user->mail) ? $user->mail : ''),
       '#size' => 20,
       '#maxlength' => 80,
     );
@@ -258,8 +251,8 @@ function ezmlm_page($display = FALSE) {
   if (! $display) {
     $display = variable_get('ezmlm_display', 'email');
   }
-  $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
-  return theme('ezmlm_subscribe_page', $form, 'page');
+  $output = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
+  return $output;
 }
 
 /**
@@ -279,26 +272,12 @@ function _ezmlm_subscribe_process($subs, $mail) {
         list($list_name, $list_domain) =  split('@', $list_email);
         // subscribe address for list formatted below
         $to = trim($list_name) .'-subscribe-'. trim($user_name) .'='. trim($user_domain) .'@'. trim($list_domain);
-        $lang = language_default();
-        drupal_mail('ezmlm', 'subscribe', $to, $lang);
-        // mail($to, '', '');
+        mail($to, '', '');
         $mylists[] = trim($list_email);
       }
     }
   }
   return $mylists;
-}
-
-/**
- * Implementation of hook_mail().
- */
-function ezmlm_mail($key, &$message, $params) {
-  switch($key) {
-    case 'subscribe':
-      $message['subject'] = '';
-      $message['body'] = '';
-    break;
-  }
 }
 
 /**
@@ -330,28 +309,3 @@ function _ezmlm_get_lists($type='DEFAULT') {
   }
 }
 
-/**
- * Implementation of hook_theme().
- */
-function ezmlm_theme() {
-  return array(
-    'ezmlm_subscribe_page' => array(
-      'arguments' => array(
-        $form = "",
-        $type = "",
-      ),
-    ),
-  );
-}
-
-function theme_ezmlm_subscribe_page($form, $type = 'page') {
-  switch ($type) {
-    case 'block':
-      $output = $form;
-    break;
-    case 'page':
-      $output = $form;
-    break;
-  }
-  return $output;
-}

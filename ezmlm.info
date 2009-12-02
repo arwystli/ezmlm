@@ -1,5 +1,10 @@
 ; $Id$
+; $Name$
 name = ezmlm
 description = "Manage ezmlm mailing lists"
 package = Mail
-core = 6.x
+core = 7.x
+
+files[] = ezmlm.install
+files[] = ezmlm.module
+files[] = ezmlm.admin.inc

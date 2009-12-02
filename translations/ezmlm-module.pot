@@ -3,15 +3,15 @@
 # LANGUAGE translation of Drupal (general)
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 # Generated from files:
-#  ezmlm.admin.inc,v 1.1.2.3 2008/04/05 23:44:39 hutch
-#  ezmlm.module,v 1.18.4.1.2.3 2008/07/01 15:14:55 hutch
-#  ezmlm.info,v 1.1.2.1.2.1 2007/12/29 11:03:42 hutch
+#  ezmlm.admin.inc: n/a
+#  ezmlm.module: n/a
+#  ezmlm.info: n/a
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2008-12-15 14:28+0000\n"
+"POT-Creation-Date: 2009-12-02 16:46+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -20,27 +20,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ezmlm.admin.inc:19
+#: ezmlm.admin.inc:18
 msgid "Add mailing lists"
 msgstr ""
 
-#: ezmlm.admin.inc:20
+#: ezmlm.admin.inc:19
 msgid "Add new lists"
 msgstr ""
 
-#: ezmlm.admin.inc:25
+#: ezmlm.admin.inc:24
 msgid "New list name"
 msgstr ""
 
-#: ezmlm.admin.inc:32
+#: ezmlm.admin.inc:31
 msgid "New list address"
 msgstr ""
 
-#: ezmlm.admin.inc:42
+#: ezmlm.admin.inc:41
 msgid "Remove mailing lists"
 msgstr ""
 
-#: ezmlm.admin.inc:43
+#: ezmlm.admin.inc:42
 msgid "Check the lists you want to remove"
 msgstr ""
 
@@ -56,101 +56,111 @@ msgstr ""
 msgid "Display lists in registration form"
 msgstr ""
 
-#: ezmlm.admin.inc:83
+#: ezmlm.admin.inc:82;105
+msgid "List display type"
+msgstr ""
+
+#: ezmlm.admin.inc:85
+msgid "Display %listaddress or %listname on the registration page"
+msgstr ""
+
+#: ezmlm.admin.inc:91
 msgid "Various settings"
 msgstr ""
 
-#: ezmlm.admin.inc:88
+#: ezmlm.admin.inc:96
 msgid "List title"
 msgstr ""
 
-#: ezmlm.admin.inc:89
+#: ezmlm.admin.inc:97
 msgid "Configure the title of the subscription list"
 msgstr ""
 
-#: ezmlm.admin.inc:90 ezmlm.module:28;170;104;110
+#: ezmlm.admin.inc:98 ezmlm.module:136;165;50;56
 msgid "Mailing lists"
 msgstr ""
 
-#: ezmlm.admin.inc:97
+#: ezmlm.admin.inc:108
+msgid "Display %listaddress or %listname on the subscription page"
+msgstr ""
+
+#: ezmlm.admin.inc:112
 msgid "Block title"
 msgstr ""
 
-#: ezmlm.admin.inc:98
+#: ezmlm.admin.inc:113
 msgid "Configure the title of the block subscription list"
 msgstr ""
 
-#: ezmlm.admin.inc:99 ezmlm.module:144
+#: ezmlm.admin.inc:114 ezmlm.module:85
 msgid "Subscriptions"
 msgstr ""
 
-#: ezmlm.admin.inc:120
+#: ezmlm.admin.inc:121
+msgid "Block display type"
+msgstr ""
+
+#: ezmlm.admin.inc:124
+msgid "Display %listaddress or %listname on the block subscription page"
+msgstr ""
+
+#: ezmlm.admin.inc:142
 msgid "You must fill in the Name field"
 msgstr ""
 
-#: ezmlm.admin.inc:153
+#: ezmlm.admin.inc:177
 msgid "Deletions done."
 msgstr ""
 
-#: ezmlm.admin.inc:168
+#: ezmlm.admin.inc:192
 msgid "The mailing lists have been saved."
 msgstr ""
 
-#: ezmlm.module:29
-msgid "Please select the mailing lists you would like to subscribe to."
+#: ezmlm.module:16
+msgid "Administer Ezmlm"
 msgstr ""
 
-#: ezmlm.module:60;242
-msgid "Please check your mail at %mail to confirm registration of:"
+#: ezmlm.module:17
+msgid "Perform maintenance tasks for Ezmlm"
 msgstr ""
 
-#: ezmlm.module:77
+#: ezmlm.module:28
 msgid "Utilities related to ezmlm, such as a box for subscribing to list(s)."
 msgstr ""
 
-#: ezmlm.module:87
-msgid "mailing %list"
-msgstr ""
-
-#: ezmlm.module:87
-msgid "Subscribe to mailing %list"
-msgstr ""
-
-#: ezmlm.module:136
+#: ezmlm.module:76
 msgid "ezmlm subscribe to list(s)"
 msgstr ""
 
-#: ezmlm.module:184
+#: ezmlm.module:115;237
+msgid "Please check your mail at %mail to confirm registration of:"
+msgstr ""
+
+#: ezmlm.module:137
+msgid "Please select the mailing lists you would like to subscribe to."
+msgstr ""
+
+#: ezmlm.module:179
 msgid "Your email address"
 msgstr ""
 
-#: ezmlm.module:191
+#: ezmlm.module:186
 msgid "Subscribe"
 msgstr ""
 
-#: ezmlm.module:217
+#: ezmlm.module:212
 msgid "No lists selected!"
 msgstr ""
 
-#: ezmlm.module:87;87
-msgid "list"
-msgid_plural "lists"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ezmlm.module:96
-msgid "administer ezmlm"
-msgstr ""
-
-#: ezmlm.module:116
+#: ezmlm.module:62
 msgid "Ezmlm lists"
 msgstr ""
 
-#: ezmlm.module:117
+#: ezmlm.module:63
 msgid "Ezmlm mailing lists management."
 msgstr ""
 
-#: ezmlm.module:0 ezmlm.info:0
+#: ezmlm.info:0
 msgid "ezmlm"
 msgstr ""
 

@@ -1,0 +1,11 @@
+<?php
+// $Id$
+// $Name$
+// for drupal 7.x
+
+/**
+ * Implement hook_uninstall().
+ */
+function ezmlm_uninstall() {
+  db_query("DELETE FROM {variable} WHERE name LIKE 'ezmlm%';");
+}
