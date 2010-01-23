@@ -87,7 +87,7 @@ function ezmlm_block_info() {
  * Implement hook_block_view().
  *
  */
-function ezmlm_block_view($delta = ''){
+function ezmlm_block_view($delta = '') {
   $block = "";
   switch ($delta) {
     case 'ezmlm_subscribe':
@@ -134,7 +134,7 @@ function ezmlm_user_insert(&$edit, $account, $category) {
     $ret = _ezmlm_subscribe_process($arr, $email);
     if (is_array($ret)) {
       $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
-      drupal_set_message($output ."<br />". implode('<br />', $ret));
+      drupal_set_message($output . '<br />' . implode('<br />', $ret));
     }
     else {
       drupal_set_message($ret, 'error');
@@ -256,7 +256,7 @@ function ezmlm_subscribe_form_submit($form, &$form_state) {
   $ret = _ezmlm_subscribe_process($arr, $email);
   if ( is_array($ret)) {
     $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
-    drupal_set_message($output ."<br />". implode('<br />', $ret));
+    drupal_set_message($output . '<br />' . implode('<br />', $ret));
   }
   else {
     drupal_set_message($ret, 'error');
@@ -292,7 +292,7 @@ function _ezmlm_subscribe_process($subs, $mail) {
       if ($list_email == $address) {
         list($list_name, $list_domain) =  split('@', $list_email);
         // subscribe address for list formatted below
-        $to = trim($list_name) .'-subscribe-'. trim($user_name) .'='. trim($user_domain) .'@'. trim($list_domain);
+        $to = trim($list_name) . '-subscribe-' . trim($user_name) . '=' . trim($user_domain) . '@' . trim($list_domain);
         mail($to, '', '');
         $mylists[] = trim($list_email);
       }

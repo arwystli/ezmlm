@@ -4,6 +4,11 @@
 // for drupal 7.x
 
 /**
+ * @file
+ * Install functions for ezmlm.
+ */
+
+/**
  * Implement hook_uninstall().
  */
 function ezmlm_uninstall() {
