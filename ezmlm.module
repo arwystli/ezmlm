@@ -140,7 +140,7 @@ function ezmlm_block($op = 'list', $delta = 0) {
         switch ($delta) {
           case 0:
             $block = "";
-            if (drupal_strlen(trim(variable_get('ezmlmmailinglists', '')))) {
+            if (count(variable_get('ezmlmmailinglists', ''))) {
               $display = variable_get('ezmlm_block_display', 'email');
               $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
               $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
