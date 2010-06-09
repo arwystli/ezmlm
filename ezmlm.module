@@ -268,7 +268,7 @@ function ezmlm_page($display = FALSE) {
  */
 function _ezmlm_subscribe_process($subs, $mail) {
   $err = "";
-  list($user_name, $user_domain) = split('@', $mail);
+  list($user_name, $user_domain) = explode('@', $mail);
   $lists = _ezmlm_get_lists();
   $mylists = array();
   // loop over the lists
@@ -276,7 +276,7 @@ function _ezmlm_subscribe_process($subs, $mail) {
     // loop over the subs
     foreach ($subs as $address) {
       if ($list_email == $address) {
-        list($list_name, $list_domain) =  split('@', $list_email);
+        list($list_name, $list_domain) =  explode('@', $list_email);
         // subscribe address for list formatted below
         $to = trim($list_name) .'-subscribe-'. trim($user_name) .'='. trim($user_domain) .'@'. trim($list_domain);
         $lang = language_default();
@@ -296,7 +296,7 @@ function ezmlm_mail($key, &$message, $params) {
   switch($key) {
     case 'subscribe':
       $message['subject'] = '';
-      $message['body'] = '';
+      $message['body'][] = '';
     break;
   }
 }
