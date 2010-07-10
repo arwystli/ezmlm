@@ -102,6 +102,12 @@ function ezmlm_block_view($delta = '') {
   }
   return $block;
 }
+
+/**
+ *
+ * Display the contents of a block.
+ * @param $which_block
+ */
 function ezmlm_block_contents($which_block) {
   switch ($which_block) {
     case 1:
