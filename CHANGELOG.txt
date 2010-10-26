@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 6, 2010-10-27
+-----------------------
+- fixed bug in theming, added theme for form
+
 Drupal 6, 2010-05-10
 -----------------------
 - fixed bug in ezmlmmailinglists evaluation, line 143

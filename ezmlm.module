@@ -142,7 +142,7 @@ function ezmlm_block($op = 'list', $delta = 0) {
             $block = "";
             if (count(variable_get('ezmlmmailinglists', ''))) {
               $display = variable_get('ezmlm_block_display', 'email');
-              $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
+              $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display, 'block');
               $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
               $block['content'] .= theme('ezmlm_subscribe_page', $form, 'block');
             }
@@ -162,7 +162,7 @@ function ezmlm_block($op = 'list', $delta = 0) {
  * @return
  *  HTML form.
  */
-function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email') {
+function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email', $region = 'page') {
   global $user;
 
   if (_ezmlm_get_count($type)) {
@@ -190,7 +190,12 @@ function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email'
     );
     $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Subscribe'));
+      '#value' => t('Subscribe')
+    );
+    $form['region'] = array(
+      '#type' => 'value',
+      '#value' => $region
+    );
   }
   else {
     $form['subscribe'] = array(
@@ -258,7 +263,7 @@ function ezmlm_page($display = FALSE) {
   if (! $display) {
     $display = variable_get('ezmlm_display', 'email');
   }
-  $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
+  $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display, 'page');
   return theme('ezmlm_subscribe_page', $form, 'page');
 }
 
@@ -337,8 +342,13 @@ function ezmlm_theme() {
   return array(
     'ezmlm_subscribe_page' => array(
       'arguments' => array(
-        $form = "",
-        $type = "",
+        'form' => NULL,
+        'type' => '',
+      ),
+    ),
+    'ezmlm_subscribe_form' => array(
+      'arguments' => array(
+        'form' => NULL
       ),
     ),
   );
@@ -353,5 +363,11 @@ function theme_ezmlm_subscribe_page($form, $type = 'page') {
       $output = $form;
     break;
   }
+  return $output;
+}
+
+function theme_ezmlm_subscribe_form($form) {
+  $output = '';
+  $output .= drupal_render($form);
   return $output;
 }
