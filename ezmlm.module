@@ -111,7 +111,10 @@ function ezmlm_block_view($delta = '') {
 function ezmlm_block_contents($which_block) {
   switch ($which_block) {
     case 1:
-      return ezmlm_page(variable_get('ezmlm_block_display', 'email'));
+      $display = variable_get('ezmlm_block_display', 'email');
+      $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display, 'block');
+      $content = render($form);
+      return theme('ezmlm_subscribe_page', array('content' => $content, 'type' => 'block'));
     case 2:
       return;
   }
@@ -155,7 +158,7 @@ function ezmlm_user_insert(&$edit, $account, $category) {
 function ezmlm_form_user_register_form_alter(&$form, &$form_state) {
   // identify the registration form and add some
   if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
-    $listsform = ezmlm_subscribe_form('', 'REG', variable_get('ezmlm_reg_display', 'email'));
+    $listsform = ezmlm_subscribe_form_build('REG', variable_get('ezmlm_reg_display', 'email'));
     unset($listsform['ezmlm_email'], $listsform['submit'], $listsform['subscribe'] );
 
     $form['ezmlm'] = array(
@@ -183,7 +186,11 @@ function ezmlm_form_user_register_form_alter(&$form, &$form_state) {
  * @return
  *  HTML form.
  */
-function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email') {
+function ezmlm_subscribe_form($form, &$form_state, $type = 'DEFAULT', $display = 'email', $region = 'page') {
+  return ezmlm_subscribe_form_build($type, $display, $region);
+}
+
+function ezmlm_subscribe_form_build($type = 'DEFAULT', $display = 'email', $region = 'page') {
   global $user;
   if (_ezmlm_get_count($type)) {
     $lists = _ezmlm_get_lists($type);
@@ -210,7 +217,12 @@ function ezmlm_subscribe_form($form_state, $type = 'DEFAULT', $display = 'email'
     );
     $form['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Subscribe'));
+      '#value' => t('Subscribe')
+    );
+    $form['region'] = array(
+      '#type' => 'value',
+      '#value' => $region
+    );
   }
   else {
     $form['subscribe'] = array(
@@ -271,15 +283,16 @@ function ezmlm_subscribe_form_submit($form, &$form_state) {
 
 // internal functions
 /**
- * Menu callback; presents the subscription form on a page, or processes
- * that form's input, whether from block or page.
+ * Menu callback; presents the subscription form on a page.
  */
 function ezmlm_page($display = FALSE) {
   if (! $display) {
     $display = variable_get('ezmlm_display', 'email');
   }
-  $output = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display);
-  return $output;
+  $form = drupal_get_form('ezmlm_subscribe_form', 'DEFAULT', $display, 'page');
+  $content = render($form);
+  return theme('ezmlm_subscribe_page', array('content' => $content, 'type' => 'page'));
+
 }
 
 /**
@@ -350,3 +363,40 @@ function _ezmlm_get_lists($type='DEFAULT') {
   }
 }
 
+/**
+ * Implements hook_theme().
+ */
+function ezmlm_theme() {
+  return array(
+    'ezmlm_subscribe_page' => array(
+      'variables' => array(
+        'content' => '',
+        'type' => 'page',
+      ),
+    ),
+    'ezmlm_subscribe_form' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+function theme_ezmlm_subscribe_page($variables) {
+  $content = $variables['content'];
+  $type = $variables['type'];
+  switch ($type) {
+    case 'block':
+      $output = $content;
+    break;
+    case 'page':
+      $output = $content;
+    break;
+  }
+  return $output;
+}
+
+function theme_ezmlm_subscribe_form($variables) {
+  $form = $variables['form'];
+  $output = '';
+  $output .= drupal_render_children($form);
+  return $output;
+}

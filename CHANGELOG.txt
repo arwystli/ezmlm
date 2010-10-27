@@ -1,6 +1,10 @@
 $Id$
 $Name$
 
+Drupal 7, 2010-10-27
+-----------------------
+- improved theming
+
 Drupal 7, 2009-12-2
 -----------------------
 - converted to Drupal 7.x
