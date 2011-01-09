@@ -20,7 +20,7 @@ function ezmlm_permission() {
 }
 
 /**
- * Implement hook_help().
+ * Implements hook_help().
  */
 function ezmlm_help($path, $arg) {
   switch ($path) {
@@ -30,21 +30,7 @@ function ezmlm_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_link().
- * currently deprecated in D7. Never used anyway AFAIK
- */
-/*
-function ezmlm_link($type, $node = NULL, $teaser = FALSE) {
-  $links = array();
-  if ($type == 'page' && user_access('access content')) {
-    $links[] = l(t('mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists'))), 'ezmlm', array('title' => t('Subscribe to mailing %list', array('%list' => format_plural(_ezmlm_get_count(), 'list', 'lists')))));
-  }
-  return $links;
-}
-*/
-
-/**
- * Implement hook_menu().
+ * Implements hook_menu().
  */
 function ezmlm_menu() {
   $items['ezmlm/add'] = array(
@@ -73,18 +59,19 @@ function ezmlm_menu() {
 
 
 /**
- * Implement hook_block_info().
+ * Implements hook_block_info().
  *
  */
 function ezmlm_block_info() {
   $blocks['ezmlm_subscribe'] = array(
     'info' => t('ezmlm subscribe to list(s)'),
+    'cache' => DRUPAL_NO_CACHE,
   );
   return $blocks;
 }
 
 /**
- * Implement hook_block_view().
+ * Implements hook_block_view().
  *
  */
 function ezmlm_block_view($delta = '') {
@@ -93,8 +80,10 @@ function ezmlm_block_view($delta = '') {
     case 'ezmlm_subscribe':
       $list = variable_get('ezmlmmailinglists', '');
       if ( is_array($list) && count($list)) {
-        $block['subject'] = variable_get('ezmlm_block_title', t('Subscriptions'));
-        $block['content'] = ezmlm_block_contents(1);
+        $block = array(
+          'subject' => variable_get('ezmlm_block_title', t('Subscriptions')),
+          'content' => ezmlm_block_contents(1),
+        );
       }
       break;
     case 'empty':
@@ -147,12 +136,12 @@ function ezmlm_user_insert(&$edit, $account, $category) {
     }
     else {
       drupal_set_message($ret, 'error');
-   }
- }
+    }
+  }
 }
 
 /**
- * Implement hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  *
  */
 function ezmlm_form_user_register_form_alter(&$form, &$form_state) {
@@ -323,10 +312,10 @@ function _ezmlm_subscribe_process($subs, $mail) {
 }
 
 /**
- * Implementation of hook_mail().
+ * Implements hook_mail().
  */
 function ezmlm_mail($key, &$message, $params) {
-  switch($key) {
+  switch ($key) {
     case 'subscribe':
       $message['subject'] = '';
       $message['body'][] = '';
