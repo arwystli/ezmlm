@@ -1,5 +1,4 @@
 <?php
-// $Id$
 // $Name$
 // for drupal 6.x
 
