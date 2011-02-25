@@ -1,4 +1,3 @@
-$Id$
 $Name$
 
 Drupal HEAD, 2005-10-21
