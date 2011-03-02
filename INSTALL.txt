@@ -1,11 +1,6 @@
-$Name$
-
-README
-------
 This module includes some utilities related to ezmlm.
 It has a block and a page with a form for subscribing for ezmlm lists.
 It can be configured to allow new registrations to join lists.
-
 
 
 Requirements

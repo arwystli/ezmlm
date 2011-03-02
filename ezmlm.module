@@ -1,6 +1,4 @@
 <?php
-// $Name$
-// for drupal 7.x
 
 /**
  * @file
