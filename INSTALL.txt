@@ -1,10 +1,4 @@
-$Name$
-
-README
-------
 This module includes some utilities related to ezmlm.  For now, it only has a box and a form for subscribing for ezmlm lists.
-
-
 
 Requirements
 ------------
@@ -17,11 +11,11 @@ Installation
 1. Copy the ezmlm.module to the Drupal modules/directory. Drupal should
    automatically detect it.
 
-2. Go to the admin menu and enable the ezmlm module  
+2. Go to the admin menu and enable the ezmlm module
 
 3. Go to the admin -> ezmlm lists menu and add / modify / delete lists.
 
-   
+
 Future Improvements Planned
 ---------------------------
 * unsubscribe option

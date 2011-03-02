@@ -1,4 +1,3 @@
-$Name$
 
 This module allows a site administrator to list one or more ezmlm-managed mailing lists which site visitors can then subscribe to through either a block and/or page form as selected by the administrator. The module sends the required subscribe message to the configured mailing list, and the subscription process proceeds in the normal fashion from that point.
 
