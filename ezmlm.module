@@ -75,8 +75,7 @@ function ezmlm_block_view($delta = '') {
   $block = "";
   switch ($delta) {
     case 'ezmlm_subscribe':
-      $list = variable_get('ezmlmmailinglists', '');
-      if ( is_array($list) && count($list)) {
+      if (count(_ezmlm_get_lists())) {
         $block = array(
           'subject' => variable_get('ezmlm_block_title', t('Subscriptions')),
           'content' => ezmlm_block_contents(1),
@@ -112,7 +111,7 @@ function ezmlm_block_contents($which_block) {
  */
 function ezmlm_user_insert(&$edit, $account, $category) {
 
-  if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
+  if (variable_get('ezmlm_register', 0) && count(_ezmlm_get_lists('REG'))) {
     $lists = _ezmlm_get_lists('REG');
     $listct = _ezmlm_get_count('REG');
     $arr = array();
@@ -143,7 +142,7 @@ function ezmlm_user_insert(&$edit, $account, $category) {
  */
 function ezmlm_form_user_register_form_alter(&$form, &$form_state) {
   // identify the registration form and add some
-  if (variable_get('ezmlm_register', 0) && variable_get('ezmlm_register_list', 0)) {
+  if (variable_get('ezmlm_register', 0) && count(_ezmlm_get_lists('REG'))) {
     $listsform = ezmlm_subscribe_form_build('REG', variable_get('ezmlm_reg_display', 'email'));
     unset($listsform['ezmlm_email'], $listsform['submit'], $listsform['subscribe'] );
 
@@ -236,7 +235,7 @@ function ezmlm_subscribe_form_validate($form, &$form_state) {
   if (count($arr) < 1) {
       form_set_error('', t('No lists selected!'));
   }
-  if ( $error = user_validate_mail($form_state['values']['ezmlm_email'])) {
+  if ($error = user_validate_mail($form_state['values']['ezmlm_email'])) {
     form_set_error('ezmlm_email', $error);
   }
 }
@@ -258,7 +257,7 @@ function ezmlm_subscribe_form_submit($form, &$form_state) {
   }
   $email = trim($form_state['values']['ezmlm_email']);
   $ret = _ezmlm_subscribe_process($arr, $email);
-  if ( is_array($ret)) {
+  if (is_array($ret)) {
     $output = (t('Please check your mail at %mail to confirm registration of:', array('%mail' => $email)));
     drupal_set_message($output . '<br />' . implode('<br />', $ret));
   }
@@ -322,31 +321,18 @@ function ezmlm_mail($key, &$message, $params) {
 
 /**
  * Return current number of lists.
- * Use this instead of count(_ezmlm_get_lists()) because non-array counts as 1.
  */
-function _ezmlm_get_count($type='DEFAULT') {
-  $lists = _ezmlm_get_lists($type);
-  if (!is_array($lists)) {
-    return 0;
-  }
-  else {
-    return count($lists);
-  }
+function _ezmlm_get_count($type = 'DEFAULT') {
+  return count(_ezmlm_get_lists($type));
 }
 
 /**
  * Return array of current mailing lists.
+ * Type should be 'DEFAULT' or 'REG'.
  */
-function _ezmlm_get_lists($type='DEFAULT') {
-  if (is_array($type)) {
-    $type = 'DEFAULT';
-  }
-  if ($type=='DEFAULT') {
-    return variable_get('ezmlmmailinglists', '');
-  }
-  elseif ($type=='REG') {
-    return variable_get('ezmlm_register_list', '');
-  }
+function _ezmlm_get_lists($type = 'DEFAULT') {
+  $lists = ($type == 'DEFAULT' ? variable_get('ezmlmmailinglists', array()) : variable_get('ezmlm_register_list', array()));
+  return is_array($lists) ? $lists : array();
 }
 
 /**
