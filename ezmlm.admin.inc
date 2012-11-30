@@ -129,6 +129,9 @@ function ezmlm_admin_settings() {
   return system_settings_form($form);
 }
 
+/**
+ * Validate form
+ */
 function ezmlm_admin_settings_validate($form, &$form_state) {
   $form_state['values']['ezmlm_add_name']    = trim($form_state['values']['ezmlm_add_name']);
   $form_state['values']['ezmlm_add_address'] = trim($form_state['values']['ezmlm_add_address']);
@@ -143,6 +146,9 @@ function ezmlm_admin_settings_validate($form, &$form_state) {
   }
 }
 
+/**
+ * Submit form
+ */
 function ezmlm_admin_settings_submit($form, &$form_state) {
   // Various settings
   if (isset($form_state['values']['ezmlm_title']) && $form_state['values']['ezmlm_title'] != "") {

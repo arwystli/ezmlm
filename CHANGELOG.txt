@@ -1,9 +1,18 @@
-commit 8d60989
+commit ae198cd
+Author: hutch <hutch@midwales.net>
+Date:   Fri Nov 30 09:47:21 2012 +0000
+
+    added comments
+
+ezmlm.admin.inc
+
+commit f38f144
 Author: hutch <hutch@midwales.net>
 Date:   Thu Nov 29 12:03:55 2012 +0000
 
     fixed lists bug #1853306
 
+CHANGELOG.txt
 ezmlm.admin.inc
 ezmlm.module
 
