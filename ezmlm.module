@@ -305,31 +305,18 @@ function ezmlm_mail($key, &$message, $params) {
 
 /**
  * Return current number of lists.
- * Use this instead of count(_ezmlm_get_lists()) because non-array counts as 1.
  */
-function _ezmlm_get_count($type='DEFAULT') {
-  $lists = _ezmlm_get_lists($type);
-  if (!is_array($lists)) {
-    return 0;
-  }
-  else {
-    return count($lists);
-  }
+function _ezmlm_get_count($type = 'DEFAULT') {
+  return count(_ezmlm_get_lists($type));
 }
 
 /**
  * Return array of current mailing lists.
+ * Type should be 'DEFAULT' or 'REG'.
  */
-function _ezmlm_get_lists($type='DEFAULT') {
-  if (is_array($type)) {
-    $type = 'DEFAULT';
-  }
-  if ($type=='DEFAULT') {
-    return variable_get('ezmlmmailinglists', '');
-  }
-  elseif ($type=='REG') {
-    return variable_get('ezmlm_register_list', '');
-  }
+function _ezmlm_get_lists($type = 'DEFAULT') {
+  $lists = ($type == 'DEFAULT' ? variable_get('ezmlmmailinglists', array()) : variable_get('ezmlm_register_list', array()));
+  return is_array($lists) ? $lists : array();
 }
 
 /**
