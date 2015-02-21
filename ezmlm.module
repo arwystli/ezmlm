@@ -2,6 +2,10 @@
 
 /**
  * @file
+ * ezmlm.module
+ * @author Bob Hutchinson http://drupal.org/user/52366
+ * @copyright GNU GPL
+ *
  * Allows users to subscribe to EZMLM mailing lists via a form in
  * a block or page.  List of mailing lists is defined by adminstrator.
  * Module sends subscription requests to each list's subscribe address.
@@ -313,8 +317,8 @@ function _ezmlm_subscribe_process($subs, $mail) {
 function ezmlm_mail($key, &$message, $params) {
   switch ($key) {
     case 'subscribe':
-      $message['subject'] = '';
-      $message['body'][] = '';
+      $message['subject'] = 'subscribe';
+      $message['body'][] = 'Subscribe';
     break;
   }
 }
